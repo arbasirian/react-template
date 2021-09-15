@@ -1,6 +1,11 @@
 /**
  * Form
  */
+export * from './Auth';
+
+/**
+ * Form
+ */
 export * from './Form';
 
 /**
