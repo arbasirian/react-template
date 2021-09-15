@@ -22,4 +22,6 @@
     "jsx": "react"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/index.d.ts"],
+  "exclude": ["./node_modules/**/*"]
+
 }

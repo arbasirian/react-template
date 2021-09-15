@@ -7,7 +7,6 @@ export const BodyStyles = css`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
   code {
     font-family: 'Mulish', sans-serif;
   }

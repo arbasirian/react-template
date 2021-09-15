@@ -7,15 +7,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from 'styled-components';
 import { store } from 'redux/store';
-import colors from 'theme/variables';
-import device from 'theme/variables';
-import breakpoints from 'theme/variables';
+import themeVariables from 'theme/variables';
+
 import 'config/axios.config';
 import GlobalStyle from 'assets/styles/global.styles';
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider theme={{ colors, device, breakpoints }}>
+    <ThemeProvider theme={themeVariables('light', 'en')}>
       <GlobalStyle />
       <App />
     </ThemeProvider>

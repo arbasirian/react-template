@@ -1,7 +1,7 @@
 import colors from './colors';
 import device, { breakpoints } from './devices';
 
-export default (theme: any, language: any) => {
+export default (theme: string, language: string) => {
   return {
     colors: colors(theme),
     device: device,

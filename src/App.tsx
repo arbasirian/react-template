@@ -10,17 +10,16 @@ import ROUTES from 'routes';
 import RouteWithSubRoutes from 'RouteWithSubRoutes';
 
 import 'assets/styles/App.css';
+import { NotFoundPage } from 'pages';
 
 const App: FC = () => (
   <Suspense fallback={() => console.log(`111`, 111)}>
     <Router>
-      <Route exact path="/">
-        <Redirect to="/home" />
-      </Route>
       <Switch>
         {ROUTES.map((route) => (
           <RouteWithSubRoutes key={route.slug} {...route} />
         ))}
+        <Route component={NotFoundPage} />
       </Switch>
     </Router>
   </Suspense>
