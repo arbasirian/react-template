@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useEffect } from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-function App() {
+import ROUTES from 'routes';
+import { RouteModel } from 'types';
+import { MainLayout } from 'layouts';
+
+import connectHelper from 'helpers/connect.helper';
+
+import GlobalStyle from 'assets/styles/global.styles';
+
+const connect = connectHelper(() => ({}));
+
+function RouteWithSubRoutes(route: RouteModel) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      {/* TODO; Handle Share page here */}
+      {route.authorized ? (
+        <MainLayout>
+          <Route
+            path={route.path}
+            render={(props: any) => (
+              // pass the sub-routes down to keep nesting
+              <route.component {...props} routes={route.routes} />
+            )}
+          />
+        </MainLayout>
+      ) : (
+        <MainLayout>
+          <Route
+            path={route.path}
+            render={(props: any) => (
+              // pass the sub-routes down to keep nesting
+              <route.component {...props} routes={route.routes} />
+            )}
+          />
+        </MainLayout>
+      )}
+    </>
   );
 }
 
-export default App;
+type Props = {
+  promise?: any;
+};
+
+function App({ promise }: Props) {
+  return (
+    <Suspense fallback={() => {}}>
+      <Router>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
+        <Switch>
+          {ROUTES.map((route) => (
+            <RouteWithSubRoutes key={route.slug} {...route} />
+          ))}
+        </Switch>
+      </Router>
+    </Suspense>
+  );
+}
+
+export default connect(App);
