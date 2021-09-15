@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { Box } from 'components';
+import { Box, ErrorBoundary } from 'components';
 
 type Props = {
   children: any;
 };
 
 const MainLayout = ({ children }: Props) => {
-  return <Box>{children}</Box>;
+  return (
+    <Box>
+      <ErrorBoundary> {children}</ErrorBoundary>
+    </Box>
+  );
 };
 
 export default MainLayout;
