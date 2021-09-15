@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 export class HomePage extends PureComponent<RouteComponentProps> {
   render() {
-    return <div></div>;
+    return <div>Home Page</div>;
   }
 }
 

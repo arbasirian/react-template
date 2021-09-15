@@ -9,7 +9,7 @@ import {
 import ROUTES from 'routes';
 import RouteWithSubRoutes from 'RouteWithSubRoutes';
 
-import GlobalStyle from 'assets/styles/global.styles';
+import 'assets/styles/App.css';
 
 const App: FC = () => (
   <Suspense fallback={() => console.log(`111`, 111)}>

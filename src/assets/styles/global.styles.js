@@ -58,6 +58,9 @@ export const BodyStyles = css`
   }
 `;
 export const AntLayouts = css`
+  .ant-layout {
+    min-height: 100vh;
+  }
   .ant-layout-header {
     background: ${({ theme }) => theme.colors.primary};
     height: auto;
@@ -65,6 +68,7 @@ export const AntLayouts = css`
     line-height: 56px;
   }
   .ant-layout-sider {
+    min-height: 100vh;
     background: ${({ theme }) => theme.colors.primary};
     box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
     .ant-layout-sider-children {

@@ -11,10 +11,12 @@ import colors from 'theme/variables';
 import device from 'theme/variables';
 import breakpoints from 'theme/variables';
 import 'config/axios.config';
+import GlobalStyle from 'assets/styles/global.styles';
 
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={{ colors, device, breakpoints }}>
+      <GlobalStyle />
       <App />
     </ThemeProvider>
   </Provider>,

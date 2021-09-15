@@ -11,11 +11,8 @@ import { RouteModel } from 'types';
 import { MainLayout } from 'layouts';
 import { Authorized, Unauthorized } from 'components';
 
-import GlobalStyle from 'assets/styles/global.styles';
-
 const RouteWithSubRoutes: FC<RouteModel> = (route: RouteModel) => (
   <>
-    <GlobalStyle />
     {/* TODO; Handle Share page here */}
     {route.authorized ? (
       <Authorized route={route} />

@@ -1,6 +1,9 @@
 import React from 'react';
+import { Layout } from 'antd';
 
 import { Box, ErrorBoundary } from 'components';
+
+const { Sider, Content } = Layout;
 
 type Props = {
   children: any;
@@ -8,9 +11,16 @@ type Props = {
 
 const MainLayout = ({ children }: Props) => {
   return (
-    <Box>
-      <ErrorBoundary> {children}</ErrorBoundary>
-    </Box>
+    <Layout>
+      <Sider>Sider</Sider>
+      <Layout>
+        <Content>
+          <Box>
+            <ErrorBoundary> {children}</ErrorBoundary>
+          </Box>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
