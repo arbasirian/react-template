@@ -8,7 +8,7 @@ export class NotFoundPage extends Component {
     return (
       <Flex height="100vh" flexDirection="column">
         <h1>404 - Not Found!</h1>
-        <Link to="/">Go Home</Link>
+        <Link to="/">Return Home</Link>
       </Flex>
     );
   }

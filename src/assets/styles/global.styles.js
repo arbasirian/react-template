@@ -3,12 +3,9 @@ import styled, { createGlobalStyle, css } from 'styled-components';
 export const BodyStyles = css`
   body {
     margin: 0;
-    font-family: 'Mulish', sans-serif;
+    font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  code {
-    font-family: 'Mulish', sans-serif;
   }
   .has-cursor {
     cursor: pointer;

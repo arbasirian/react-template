@@ -28,7 +28,7 @@ export const Title1 = styled.h1`
   font-family: ${(props) => {
     if (props.fontFamily) return props.fontFamily;
     if (props.theme.language === 'fa') return 'Vazir';
-    return 'Avenir-Regular';
+    return 'Poppins';
   }};
 
   /* WEIGHT */

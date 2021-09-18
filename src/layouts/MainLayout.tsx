@@ -16,7 +16,7 @@ const MainLayout = ({ children }: Props) => {
       <Layout>
         <Content>
           <Box>
-            <ErrorBoundary> {children}</ErrorBoundary>
+            <ErrorBoundary>{children}</ErrorBoundary>
           </Box>
         </Content>
       </Layout>
