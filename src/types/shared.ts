@@ -6,3 +6,10 @@ export interface PasswordCheckerInfoModel {
   digit: boolean;
   point: number;
 }
+
+export enum DeviceNames {
+  MOBILE = 'mobile',
+  TABLET = 'tablet',
+  LAPTOP = 'laptop',
+  DESKTOP = 'desktop',
+}

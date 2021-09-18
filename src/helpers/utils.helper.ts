@@ -1,4 +1,5 @@
 import { PasswordCheckerInfoModel } from 'types';
+import { notification } from 'components';
 
 /**
  * a functions that check the password pont
@@ -45,7 +46,17 @@ export const passwordStrengthChecker = (
   return passwordInfo;
 };
 
+export const copyToClipboard = (text: string) => () => {
+  try {
+    navigator.clipboard.writeText(text);
+    notification.info('در حافظه کپی شد!');
+  } catch (_) {
+    notification.error('کپی ناموفق بود!');
+  }
+};
+
 export default {
   checkPasswordPoint,
   passwordStrengthChecker,
+  copyToClipboard,
 };
