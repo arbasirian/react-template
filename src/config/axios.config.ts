@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { notificationHelper } from 'helpers';
-import Cookies from 'js-cookie';
-import jwt_decode, { JwtPayload } from 'jwt-decode';
+import { CookiesHelper, notificationHelper } from 'helpers';
+
+const Cookies = new CookiesHelper();
 
 const whitleList: string[] = ['/auth/login/email'];
 
-const accessToken = Cookies.get('access_token');
-const refreshToken = Cookies.get('refresh_token');
-const expires = Cookies.get('expires_access_token') || 0;
+const access = Cookies.get('current_project_token');
+const refresh = Cookies.get('current_project_refresh_token');
+const expires = Cookies.get('current_project_token_expire_date') || 0;
 
 let isRefreshingToken: boolean = false;
 
@@ -30,8 +30,7 @@ const isTokenExpired = (): boolean => {
 };
 
 export const logoutUser = (): void => {
-  Cookies.remove('access_token');
-  Cookies.remove('refresh_token');
+  Cookies.removeAll();
   localStorage.removeItem('persist:root');
   setTimeout(() => {
     window.location.pathname = '/auth/login';
@@ -110,152 +109,3 @@ axios.interceptors.response.use(
       }
   }
 );
-
-// import axios, { AxiosRequestConfig } from 'axios';
-// import jwt_decode, { JwtPayload } from 'jwt-decode';
-// import Cookies from 'js-cookie';
-
-// import { AxiosHelper } from '../helpers';
-
-// const WHITE_LIST: string[] = ['/auth/login/email', 'countries', 'assets'];
-
-// let isRefreshingToken: boolean = false; // this is lock! :D
-// const FETCH_TOKEN_TIMEOUT: number = 3000;
-// const CHECK_TOKEN_INTERVAL: number = 500;
-// const accessToken = Cookies.get('access_token') ?? '';
-// const refreshToken = Cookies.get('refresh_token') ?? '';
-
-// const isTokenExpired = (): boolean => {
-//   try {
-//     const expires = jwt_decode<JwtPayload>(accessToken).exp ?? 0;
-//     const tokenExpireTimestamp: number = new Date(expires).getTime();
-//     console.log(tokenExpireTimestamp);
-
-//     if (isNaN(tokenExpireTimestamp)) return true;
-
-//     const now: number = new Date().getTime();
-
-//     return now > tokenExpireTimestamp - 3000;
-//   } catch (_) {
-//     return true;
-//   }
-// };
-
-// const logout = (): void => {
-//   Cookies.remove('access_token');
-//   Cookies.remove('refresh_token');
-//   window.location.pathname = '/auth/login';
-// };
-
-// /**
-//  * call refresh token api, set new cookies and return new token
-//  */
-// const getFreshTokenDirectly = async (): Promise<string> => {
-//   if (refreshToken) {
-//     try {
-//       isRefreshingToken = true;
-//       const { data: refreshData } = await AxiosHelper({
-//         url: '/auth/token/refresh',
-//         method: 'post',
-//         headers: {
-//           Authorization: `Bearer ${accessToken}`,
-//         },
-//         data: {
-//           refreshToken: Cookies.get('refresh_token'),
-//         },
-//       });
-
-//       console.log(refreshData);
-//       const expires = jwt_decode<JwtPayload>(refreshData.access).exp;
-//       Cookies.set('access_token', refreshData.access, { expires });
-//       Cookies.set('refresh_token', refreshData.refresh);
-
-//       return `Bearer ${refreshData?.data?.payload?.token}`;
-//     } catch (e) {
-//       isRefreshingToken = false;
-//       logout();
-//       throw new axios.Cancel(
-//         `Retrieving new token failed! There is a problem to fetch new token: ${e}`
-//       );
-//     }
-//   } else {
-//     logout();
-//     throw new axios.Cancel(
-//       `Retrieving new token failed! Because There isn't any refresh token`
-//     );
-//   }
-// };
-
-// /**
-//  * will be used when another axios request (thread) is fetching new token using the above function.
-//  * then, this axios request (thread) will wait for the other thread and when new token arrived,
-//  * returns the fresh token from updated cookies
-//  */
-// const getFreshTokenFromOtherThread = async (): Promise<string> => {
-//   let waitedTime: number = 0;
-//   let intervalId: ReturnType<typeof setInterval>;
-
-//   const clearTokenInterval = () => {
-//     if (intervalId) clearInterval(intervalId);
-//     waitedTime = 0;
-//   };
-
-//   try {
-//     await new Promise((resolve, reject) => {
-//       intervalId = setInterval(() => {
-//         if (waitedTime >= FETCH_TOKEN_TIMEOUT) {
-//           clearTokenInterval();
-//           reject(`Couldn't wait for new token anymore`);
-//         }
-
-//         waitedTime += CHECK_TOKEN_INTERVAL;
-
-//         if (!isTokenExpired()) {
-//           clearTokenInterval();
-//           resolve(`New token successfully taken`);
-//         }
-//       }, CHECK_TOKEN_INTERVAL);
-//     });
-//   } catch (e) {
-//     console.log(e);
-//   } finally {
-//     return `Bearer ${Cookies.get('access_token')}`;
-//   }
-// };
-
-// axios.interceptors.request.use(
-//   //@ts-ignore
-//   async (config: AxiosRequestConfig) => {
-//     try {
-//       console.log('isTokenExpired', isTokenExpired);
-//       if (typeof window !== undefined) {
-//         // check if there isn't need to refresh token
-//         if (!isTokenExpired()) return config;
-
-//         // check the call is related to get refresh token or the other public APIs.
-//         //@ts-ignore
-
-//         if (WHITE_LIST.some((item) => config.url.includes(item))) return config;
-
-//         let newConfig = { ...config };
-
-//         if (isRefreshingToken) {
-//           newConfig.headers.Authorization =
-//             await getFreshTokenFromOtherThread();
-//         } else {
-//           newConfig.headers.Authorization = await getFreshTokenDirectly();
-//         }
-
-//         isRefreshingToken = false;
-//         return newConfig;
-//       }
-//     } catch (_) {
-//       return config;
-//     }
-//   },
-//   (error) => {
-//     // request error
-//     isRefreshingToken = false;
-//     return Promise.reject(error);
-//   }
-// );

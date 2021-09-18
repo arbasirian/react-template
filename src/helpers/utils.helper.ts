@@ -46,6 +46,11 @@ export const passwordStrengthChecker = (
   return passwordInfo;
 };
 
+/**
+ * function that copy text to clipboard and show notifiction
+ * @param { string } text | string to copy
+ */
+
 export const copyToClipboard = (text: string) => () => {
   try {
     navigator.clipboard.writeText(text);

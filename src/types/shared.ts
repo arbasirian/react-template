@@ -13,3 +13,11 @@ export enum DeviceNames {
   LAPTOP = 'laptop',
   DESKTOP = 'desktop',
 }
+
+export interface AuthDataPayloadModel {
+  type: string;
+  loginMethod: 'EMAIL' | 'SMS';
+  token: string;
+  expiresIn: number;
+  refreshToken: string;
+}

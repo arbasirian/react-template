@@ -1,8 +1,10 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import { CookiesHelper } from 'helpers';
 
 const AxiosHelper = ({ token, ...params }: any) => {
-  const authorization = token || Cookies.get('access_token_pb');
+  const cookies = new CookiesHelper();
+
+  const authorization = token || cookies.get('current_project_token');
 
   const header = authorization
     ? {
