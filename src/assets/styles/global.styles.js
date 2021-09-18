@@ -65,7 +65,7 @@ export const AntLayouts = css`
   }
   .ant-layout-sider {
     min-height: 100vh;
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.accent};
     box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
     .ant-layout-sider-children {
       .ant-menu.ant-menu-dark,
