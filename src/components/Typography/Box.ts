@@ -1,26 +1,13 @@
 import styled from 'styled-components';
+import { BoxProps } from 'types/components';
 
-export const Title1 = styled.h1`
+export const Box = styled.div<BoxProps>`
   /* DIRECTION */
-  direction: ${(props) =>
-    props.direction
-      ? props.direction
-      : props.theme.language === 'fa'
-      ? 'rtl'
-      : 'ltr'};
-
-  margin: 0;
-  font-size: 42px;
-  letter-spacing: ${(props) =>
-    props.theme.language === 'en' ? '0' : '-0.02em'};
-  line-height: 56px;
-
-  /* TEXT ALIGN */
-  text-align: ${(props) => (props.align ? props.align : '')};
+  direction: ${(props) => (props.theme.language === 'fa' ? 'rtl' : 'ltr')};
 
   /* COLOR */
   color: ${(props) =>
-    !!props.theme.colors[props.color]
+    !!props.color && !!props.theme.colors[props.color]
       ? props.theme.colors[props.color]
       : props.theme.colors.white};
 
@@ -31,13 +18,15 @@ export const Title1 = styled.h1`
     return 'Poppins';
   }};
 
-  /* WEIGHT */
-  font-weight: ${(props) => (props.weight ? props.weight : 'bold')};
-
   /* WIDTH */
   width: ${(props) => (props.width ? props.width : '')};
   min-width: ${(props) => (props.minWidth ? props.minWidth : '')};
   max-width: ${(props) => (props.maxWidth ? props.maxWidth : '')};
+
+  /* OVERFLOW */
+  overflow: ${(props) => (props.overflow ? props.overflow : '')};
+  overflow-x: ${(props) => (props.overflowx ? props.overflowx : '')};
+  overflow-y: ${(props) => (props.overflowy ? props.overflowy : '')};
 
   /* HEIGHT */
   height: ${(props) => (props.height ? props.height : '')};
@@ -55,15 +44,27 @@ export const Title1 = styled.h1`
   /* PADDING */
   padding: ${(props) => (props.padding ? props.padding : '')};
   padding-top: ${(props) => (props.paddingTop ? props.paddingTop : '')};
-  padding-inline-start: ${(props) =>
+  padding-inline-end: ${(props) =>
     props.paddingRight ? props.paddingRight : ''};
   padding-bottom: ${(props) =>
     props.paddingBottom ? props.paddingBottom : ''};
-  padding-inline-end: ${(props) =>
+  padding-inline-start: ${(props) =>
     props.paddingLeft ? props.paddingLeft : ''};
 
   /* DISPLAY */
   display: ${(props) => (props.display ? props.display : '')};
+
+  /* BACKGROUND */
+  background: ${(props) =>
+    props.background
+      ? props.theme.colors[props.background] || props.background
+      : ''};
+
+  /* BORDERRADIUS */
+  border-radius: ${(props) => props.borderRadius || ''};
+
+  /* TEXT ALIGN */
+  text-align: ${(props) => (props.align ? props.align : '')};
 
   /* BORDER */
   border: ${(props) => (props.border ? props.border : '')};
@@ -73,7 +74,8 @@ export const Title1 = styled.h1`
   border-right: ${(props) => (props.borderRight ? props.borderRight : '')};
   border-radius: ${(props) => (props.borderRadius ? props.borderRadius : '')};
   border-color: ${(props) =>
-    props.theme.colors[props.borderColor] || props.borderColor};
+    (props.borderColor && props.theme.colors[props.borderColor]) ||
+    props.borderColor};
 
   /* POSITION */
   position: ${(props) => (props.position ? props.position : '')};
@@ -82,14 +84,20 @@ export const Title1 = styled.h1`
   bottom: ${(props) => (props.bottom ? props.bottom : '')};
   top: ${(props) => (props.top ? props.top : '')};
 
-  @media ${({ theme }) => theme.device.desktop} {
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignD ? props.alignD : '')};
+  /* VERTICAL ALIGN */
+  vertical-align: ${(props) =>
+    props.verticalAlign ? props.verticalAlign : ''};
 
+  @media ${({ theme }) => theme.device.desktop} {
     /* WIDTH */
     width: ${(props) => (props.widthD ? props.widthD : '')};
     min-width: ${(props) => (props.minWidthD ? props.minWidthD : '')};
     max-width: ${(props) => (props.maxWidthD ? props.maxWidthD : '')};
+
+    /* OVERFLOW */
+    overflow: ${(props) => props.overflowD || ''};
+    overflow-x: ${(props) => props.overflowxD || ''};
+    overflow-y: ${(props) => props.overflowyD || ''};
 
     /* HEIGHT */
     height: ${(props) => (props.heightD ? props.heightD : '')};
@@ -109,15 +117,27 @@ export const Title1 = styled.h1`
     /* PADDING */
     padding: ${(props) => (props.paddingD ? props.paddingD : '')};
     padding-top: ${(props) => (props.paddingTopD ? props.paddingTopD : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightD ? props.paddingRightD : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomD ? props.paddingBottomD : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftD ? props.paddingLeftD : ''};
 
     /* DISPLAY */
     display: ${(props) => (props.displayD ? props.displayD : '')};
+
+    /* BACKGROUND */
+    background: ${(props) =>
+      props.backgroundD
+        ? props.theme.colors[props.backgroundD] || props.backgroundD
+        : ''};
+
+    /* BORDERRADIUS */
+    border-radius: ${(props) => props.borderRadiusD || ''};
+
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignD ? props.alignD : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderD ? props.borderD : '')};
@@ -129,7 +149,8 @@ export const Title1 = styled.h1`
     border-radius: ${(props) =>
       props.borderRadiusD ? props.borderRadiusD : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorD] || props.borderColorD};
+      (props.borderColorD && props.theme.colors[props.borderColorD]) ||
+      props.borderColorD};
 
     /* POSITION */
     position: ${(props) => (props.positionD ? props.positionD : '')};
@@ -137,16 +158,22 @@ export const Title1 = styled.h1`
     left: ${(props) => (props.leftD ? props.leftD : '')};
     bottom: ${(props) => (props.bottomD ? props.bottomD : '')};
     top: ${(props) => (props.topD ? props.topD : '')};
+
+    /* VERTICAL ALIGN */
+    vertical-align: ${(props) =>
+      props.verticalAlignD ? props.verticalAlignD : ''};
   }
 
   @media ${({ theme }) => theme.device.laptop} {
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignL ? props.alignL : '')};
-
     /* WIDTH */
     width: ${(props) => (props.widthL ? props.widthL : '')};
     min-width: ${(props) => (props.minWidthL ? props.minWidthL : '')};
     max-width: ${(props) => (props.maxWidthL ? props.maxWidthL : '')};
+
+    /* OVERFLOW */
+    overflow: ${(props) => (props.overflowL ? props.overflowL : '')};
+    overflow-x: ${(props) => props.overflowxL || ''};
+    overflow-y: ${(props) => props.overflowyL || ''};
 
     /* HEIGHT */
     height: ${(props) => (props.heightL ? props.heightL : '')};
@@ -166,15 +193,27 @@ export const Title1 = styled.h1`
     /* PADDING */
     padding: ${(props) => (props.paddingL ? props.paddingL : '')};
     padding-top: ${(props) => (props.paddingTopL ? props.paddingTopL : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightL ? props.paddingRightL : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomL ? props.paddingBottomL : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftL ? props.paddingLeftL : ''};
 
     /* DISPLAY */
     display: ${(props) => (props.displayL ? props.displayL : '')};
+
+    /* BACKGROUND */
+    background: ${(props) =>
+      props.backgroundL
+        ? props.theme.colors[props.backgroundL] || props.backgroundL
+        : ''};
+
+    /* BORDERRADIUS */
+    border-radius: ${(props) => props.borderRadiusL || ''};
+
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignL ? props.alignL : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderL ? props.borderL : '')};
@@ -186,7 +225,8 @@ export const Title1 = styled.h1`
     border-radius: ${(props) =>
       props.borderRadiusL ? props.borderRadiusL : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorL] || props.borderColorL};
+      (props.borderColorL && props.theme.colors[props.borderColorL]) ||
+      props.borderColorL};
 
     /* POSITION */
     position: ${(props) => (props.positionL ? props.positionL : '')};
@@ -194,19 +234,22 @@ export const Title1 = styled.h1`
     left: ${(props) => (props.leftL ? props.leftL : '')};
     bottom: ${(props) => (props.bottomL ? props.bottomL : '')};
     top: ${(props) => (props.topL ? props.topL : '')};
+
+    /* VERTICAL ALIGN */
+    vertical-align: ${(props) =>
+      props.verticalAlignL ? props.verticalAlignL : ''};
   }
 
   @media ${({ theme }) => theme.device.tablet} {
-    font-size: 34px;
-    line-height: 48px;
-
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignT ? props.alignT : '')};
-
     /* WIDTH */
     width: ${(props) => (props.widthT ? props.widthT : '')};
     min-width: ${(props) => (props.minWidthT ? props.minWidthT : '')};
     max-width: ${(props) => (props.maxWidthT ? props.maxWidthT : '')};
+
+    /* OVERFLOW */
+    overflow: ${(props) => (props.overflowT ? props.overflowT : '')};
+    overflow-x: ${(props) => props.overflowxT || ''};
+    overflow-y: ${(props) => props.overflowyT || ''};
 
     /* HEIGHT */
     height: ${(props) => (props.heightT ? props.heightT : '')};
@@ -226,15 +269,27 @@ export const Title1 = styled.h1`
     /* PADDING */
     padding: ${(props) => (props.paddingT ? props.paddingT : '')};
     padding-top: ${(props) => (props.paddingTopT ? props.paddingTopT : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightT ? props.paddingRightT : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomT ? props.paddingBottomT : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftT ? props.paddingLeftT : ''};
 
     /* DISPLAY */
     display: ${(props) => (props.displayT ? props.displayT : '')};
+
+    /* BACKGROUND */
+    background: ${(props) =>
+      props.backgroundT
+        ? props.theme.colors[props.backgroundT] || props.backgroundT
+        : ''};
+
+    /* BORDERRADIUS */
+    border-radius: ${(props) => props.borderRadiusT || ''};
+
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignT ? props.alignT : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderT ? props.borderT : '')};
@@ -246,7 +301,8 @@ export const Title1 = styled.h1`
     border-radius: ${(props) =>
       props.borderRadiusT ? props.borderRadiusT : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorT] || props.borderColorT};
+      (props.borderColorT && props.theme.colors[props.borderColorT]) ||
+      props.borderColorT};
 
     /* POSITION */
     position: ${(props) => (props.positionT ? props.positionT : '')};
@@ -254,16 +310,22 @@ export const Title1 = styled.h1`
     left: ${(props) => (props.leftT ? props.leftT : '')};
     bottom: ${(props) => (props.bottomT ? props.bottomT : '')};
     top: ${(props) => (props.topT ? props.topT : '')};
+
+    /* VERTICAL ALIGN */
+    vertical-align: ${(props) =>
+      props.verticalAlignT ? props.verticalAlignT : ''};
   }
 
   @media ${({ theme }) => theme.device.mobile} {
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignM ? props.alignM : '')};
-
     /* WIDTH */
     width: ${(props) => (props.widthM ? props.widthM : '')};
     min-width: ${(props) => (props.minWidthM ? props.minWidthM : '')};
     max-width: ${(props) => (props.maxWidthM ? props.maxWidthM : '')};
+
+    /* OVERFLOW */
+    overflow: ${(props) => (props.overflowM ? props.overflowM : '')};
+    overflow-x: ${(props) => props.overflowxM || ''};
+    overflow-y: ${(props) => props.overflowyM || ''};
 
     /* HEIGHT */
     height: ${(props) => (props.heightM ? props.heightM : '')};
@@ -283,15 +345,27 @@ export const Title1 = styled.h1`
     /* PADDING */
     padding: ${(props) => (props.paddingM ? props.paddingM : '')};
     padding-top: ${(props) => (props.paddingTopM ? props.paddingTopM : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightM ? props.paddingRightM : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomM ? props.paddingBottomM : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftM ? props.paddingLeftM : ''};
 
     /* DISPLAY */
     display: ${(props) => (props.displayM ? props.displayM : '')};
+
+    /* BACKGROUND */
+    background: ${(props) =>
+      props.backgroundM
+        ? props.theme.colors[props.backgroundM] || props.backgroundM
+        : ''};
+
+    /* BORDERRADIUS */
+    border-radius: ${(props) => props.borderRadiusM || ''};
+
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignM ? props.alignM : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderM ? props.borderM : '')};
@@ -303,7 +377,8 @@ export const Title1 = styled.h1`
     border-radius: ${(props) =>
       props.borderRadiusM ? props.borderRadiusM : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorM] || props.borderColorM};
+      (props.borderColorM && props.theme.colors[props.borderColorM]) ||
+      props.borderColorM};
 
     /* POSITION */
     position: ${(props) => (props.positionM ? props.positionM : '')};
@@ -311,5 +386,8 @@ export const Title1 = styled.h1`
     left: ${(props) => (props.leftM ? props.leftM : '')};
     bottom: ${(props) => (props.bottomM ? props.bottomM : '')};
     top: ${(props) => (props.topM ? props.topM : '')};
+
+    /* VERTICAL ALIGN */
+    vertical-align: ${(props) => props.verticalAlignM && props.verticalAlignM};
   }
 `;

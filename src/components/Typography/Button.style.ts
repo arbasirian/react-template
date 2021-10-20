@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
+import { BoxProps } from 'types/components';
 
-const getCustomeType = (custome_type, custome_shape) => {
+const getCustomeType = (custome_type: string, custome_shape: string) => {
   switch (custome_type) {
     case 'primary':
       return css`
@@ -18,7 +19,7 @@ const getCustomeType = (custome_type, custome_shape) => {
             : 'transparent'};
         color: ${(props) =>
           custome_shape === 'fill'
-            ? props.theme.colors.black
+            ? props.theme.colors.white
             : custome_shape === 'outline'
             ? props.theme.colors.primary
             : props.theme.colors.primary};
@@ -107,10 +108,52 @@ const getCustomeType = (custome_type, custome_shape) => {
             ? props.theme.colors.red
             : props.theme.colors.red};
       `;
+    case 'alert':
+      return css`
+        border-color: ${(props) =>
+          custome_shape === 'fill'
+            ? props.theme.colors.orange1
+            : custome_shape === 'outline'
+            ? props.theme.colors.orange1
+            : 'transparent'};
+        background-color: ${(props) =>
+          custome_shape === 'fill'
+            ? props.theme.colors.orange1
+            : custome_shape === 'outline'
+            ? 'transparent'
+            : 'transparent'};
+        color: ${(props) =>
+          custome_shape === 'fill'
+            ? props.theme.colors.forceWhite
+            : custome_shape === 'outline'
+            ? props.theme.colors.forceWhite
+            : props.theme.colors.forceWhite};
+      `;
+    default:
+      return css`
+        border-color: ${(props) =>
+          custome_shape === 'fill'
+            ? props.theme.colors.primary
+            : custome_shape === 'outline'
+            ? props.theme.colors.primary
+            : 'transparent'};
+        background-color: ${(props) =>
+          custome_shape === 'fill'
+            ? props.theme.colors.primary
+            : custome_shape === 'outline'
+            ? 'transparent'
+            : 'transparent'};
+        color: ${(props) =>
+          custome_shape === 'fill'
+            ? props.theme.colors.white
+            : custome_shape === 'outline'
+            ? props.theme.colors.primary
+            : props.theme.colors.primary};
+      `;
   }
 };
 
-const getCustomeShape = (custome_size, custome_shape) => {
+const getCustomeShape = (custome_size: string, custome_shape: string) => {
   switch (custome_size) {
     case 'large':
       return css`
@@ -120,7 +163,7 @@ const getCustomeShape = (custome_size, custome_shape) => {
         span {
           font-size: 20px;
           line-height: 24px;
-          font-weight: bold;
+
           letter-spacing: 0;
         }
       `;
@@ -132,7 +175,7 @@ const getCustomeShape = (custome_size, custome_shape) => {
         span {
           font-size: 12px;
           line-height: 20px;
-          font-weight: bold;
+
           letter-spacing: 0;
         }
       `;
@@ -145,7 +188,6 @@ const getCustomeShape = (custome_size, custome_shape) => {
         span {
           font-size: 12px;
           line-height: 100%;
-          font-weight: bold;
           letter-spacing: 0;
         }
       `;
@@ -153,20 +195,26 @@ const getCustomeShape = (custome_size, custome_shape) => {
     default:
       // medium size
       return css`
-        padding: ${custome_shape !== 'borderless' ? '10px 22px' : '10px 0'};
+        padding: ${custome_shape !== 'borderless' ? '10px 15px' : '10px 0'};
         height: 48px !important;
 
         span {
           font-size: 16px;
           line-height: 24px;
-          font-weight: bold;
           letter-spacing: 0;
         }
       `;
   }
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<
+  BoxProps &
+    Partial<{
+      custome_type: string;
+      custome_shape: string;
+      custome_size: string;
+    }>
+>`
   direction: ${(props) => (props.theme.language === 'fa' ? 'rtl' : 'ltr')};
   border-radius: 8px;
   border: 2px solid;
@@ -193,30 +241,40 @@ const Wrapper = styled.div`
   /* PADDING */
   padding: ${(props) => (props.padding ? props.padding : '')};
   padding-top: ${(props) => (props.paddingTop ? props.paddingTop : '')};
-  padding-inline-start: ${(props) =>
+  padding-inline-end: ${(props) =>
     props.paddingRight ? props.paddingRight : ''};
   padding-bottom: ${(props) =>
     props.paddingBottom ? props.paddingBottom : ''};
-  padding-inline-end: ${(props) =>
+  padding-inline-start: ${(props) =>
     props.paddingLeft ? props.paddingLeft : ''};
 
   ${({ custome_type, custome_shape }) =>
+    custome_type &&
+    custome_shape &&
     getCustomeType(custome_type, custome_shape)};
   ${({ custome_size, custome_shape }) =>
+    custome_size &&
+    custome_shape &&
     getCustomeShape(custome_size, custome_shape)};
 
   &:focus {
     ${({ custome_type, custome_shape }) =>
+      custome_type &&
+      custome_shape &&
       getCustomeType(custome_type, custome_shape)};
   }
 
   &:hover {
     ${({ custome_type, custome_shape }) =>
+      custome_type &&
+      custome_shape &&
       getCustomeType(custome_type, custome_shape)};
     filter: brightness(0.8);
   }
   &[disabled] {
     ${({ custome_type, custome_shape }) =>
+      custome_type &&
+      custome_shape &&
       getCustomeType(custome_type, custome_shape)};
     opacity: 0.2;
   }
@@ -245,11 +303,11 @@ const Wrapper = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingD ? props.paddingD : '')};
     padding-top: ${(props) => (props.paddingTopD ? props.paddingTopD : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightD ? props.paddingRightD : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomD ? props.paddingBottomD : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftD ? props.paddingLeftD : ''};
   }
 
@@ -277,11 +335,11 @@ const Wrapper = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingL ? props.paddingL : '')};
     padding-top: ${(props) => (props.paddingTopL ? props.paddingTopL : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightL ? props.paddingRightL : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomL ? props.paddingBottomL : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftL ? props.paddingLeftL : ''};
   }
 
@@ -309,11 +367,11 @@ const Wrapper = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingT ? props.paddingT : '')};
     padding-top: ${(props) => (props.paddingTopT ? props.paddingTopT : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightT ? props.paddingRightT : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomT ? props.paddingBottomT : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftT ? props.paddingLeftT : ''};
   }
 
@@ -341,11 +399,11 @@ const Wrapper = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingM ? props.paddingM : '')};
     padding-top: ${(props) => (props.paddingTopM ? props.paddingTopM : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightM ? props.paddingRightM : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomM ? props.paddingBottomM : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftM ? props.paddingLeftM : ''};
   }
 `;

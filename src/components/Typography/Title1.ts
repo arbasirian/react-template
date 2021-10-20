@@ -1,6 +1,7 @@
+import { TitleProps } from 'types/components';
 import styled from 'styled-components';
 
-export const Title3 = styled.h3`
+export const Title1 = styled.h1<TitleProps>`
   /* DIRECTION */
   direction: ${(props) =>
     props.direction
@@ -10,17 +11,17 @@ export const Title3 = styled.h3`
       : 'ltr'};
 
   margin: 0;
-  font-size: 28px;
+  font-size: 42px;
   letter-spacing: ${(props) =>
     props.theme.language === 'en' ? '0' : '-0.02em'};
-  line-height: 40px;
+  line-height: 56px;
 
   /* TEXT ALIGN */
   text-align: ${(props) => (props.align ? props.align : '')};
 
   /* COLOR */
   color: ${(props) =>
-    !!props.theme.colors[props.color]
+    !!props.color && !!props.theme.colors[props.color]
       ? props.theme.colors[props.color]
       : props.theme.colors.white};
 
@@ -55,11 +56,11 @@ export const Title3 = styled.h3`
   /* PADDING */
   padding: ${(props) => (props.padding ? props.padding : '')};
   padding-top: ${(props) => (props.paddingTop ? props.paddingTop : '')};
-  padding-inline-start: ${(props) =>
+  padding-inline-end: ${(props) =>
     props.paddingRight ? props.paddingRight : ''};
   padding-bottom: ${(props) =>
     props.paddingBottom ? props.paddingBottom : ''};
-  padding-inline-end: ${(props) =>
+  padding-inline-start: ${(props) =>
     props.paddingLeft ? props.paddingLeft : ''};
 
   /* DISPLAY */
@@ -73,7 +74,8 @@ export const Title3 = styled.h3`
   border-right: ${(props) => (props.borderRight ? props.borderRight : '')};
   border-radius: ${(props) => (props.borderRadius ? props.borderRadius : '')};
   border-color: ${(props) =>
-    props.theme.colors[props.borderColor] || props.borderColor};
+    (props.borderColor && props.theme.colors[props.borderColor]) ||
+    props.borderColor};
 
   /* POSITION */
   position: ${(props) => (props.position ? props.position : '')};
@@ -109,11 +111,11 @@ export const Title3 = styled.h3`
     /* PADDING */
     padding: ${(props) => (props.paddingD ? props.paddingD : '')};
     padding-top: ${(props) => (props.paddingTopD ? props.paddingTopD : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightD ? props.paddingRightD : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomD ? props.paddingBottomD : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftD ? props.paddingLeftD : ''};
 
     /* DISPLAY */
@@ -129,7 +131,8 @@ export const Title3 = styled.h3`
     border-radius: ${(props) =>
       props.borderRadiusD ? props.borderRadiusD : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorD] || props.borderColorD};
+      (props.borderColorD && props.theme.colors[props.borderColorD]) ||
+      props.borderColorD};
 
     /* POSITION */
     position: ${(props) => (props.positionD ? props.positionD : '')};
@@ -166,11 +169,11 @@ export const Title3 = styled.h3`
     /* PADDING */
     padding: ${(props) => (props.paddingL ? props.paddingL : '')};
     padding-top: ${(props) => (props.paddingTopL ? props.paddingTopL : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightL ? props.paddingRightL : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomL ? props.paddingBottomL : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftL ? props.paddingLeftL : ''};
 
     /* DISPLAY */
@@ -186,7 +189,8 @@ export const Title3 = styled.h3`
     border-radius: ${(props) =>
       props.borderRadiusL ? props.borderRadiusL : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorL] || props.borderColorL};
+      (props.borderColorL && props.theme.colors[props.borderColorL]) ||
+      props.borderColorL};
 
     /* POSITION */
     position: ${(props) => (props.positionL ? props.positionL : '')};
@@ -197,8 +201,8 @@ export const Title3 = styled.h3`
   }
 
   @media ${({ theme }) => theme.device.tablet} {
-    font-size: 22px;
-    line-height: 32px;
+    font-size: 34px;
+    line-height: 48px;
 
     /* TEXT ALIGN */
     text-align: ${(props) => (props.alignT ? props.alignT : '')};
@@ -226,11 +230,11 @@ export const Title3 = styled.h3`
     /* PADDING */
     padding: ${(props) => (props.paddingT ? props.paddingT : '')};
     padding-top: ${(props) => (props.paddingTopT ? props.paddingTopT : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightT ? props.paddingRightT : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomT ? props.paddingBottomT : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftT ? props.paddingLeftT : ''};
 
     /* DISPLAY */
@@ -246,7 +250,8 @@ export const Title3 = styled.h3`
     border-radius: ${(props) =>
       props.borderRadiusT ? props.borderRadiusT : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorT] || props.borderColorT};
+      (props.borderColorT && props.theme.colors[props.borderColorT]) ||
+      props.borderColorT};
 
     /* POSITION */
     position: ${(props) => (props.positionT ? props.positionT : '')};
@@ -283,11 +288,11 @@ export const Title3 = styled.h3`
     /* PADDING */
     padding: ${(props) => (props.paddingM ? props.paddingM : '')};
     padding-top: ${(props) => (props.paddingTopM ? props.paddingTopM : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightM ? props.paddingRightM : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomM ? props.paddingBottomM : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftM ? props.paddingLeftM : ''};
 
     /* DISPLAY */
@@ -303,7 +308,8 @@ export const Title3 = styled.h3`
     border-radius: ${(props) =>
       props.borderRadiusM ? props.borderRadiusM : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorM] || props.borderColorM};
+      (props.borderColorM && props.theme.colors[props.borderColorM]) ||
+      props.borderColorM};
 
     /* POSITION */
     position: ${(props) => (props.positionM ? props.positionM : '')};

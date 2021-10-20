@@ -1,15 +1,111 @@
 import styled from 'styled-components';
+import { TextProps } from 'types/components';
 
-export const Flex = styled.div`
-  display: flex;
+export const Text = styled.span<TextProps>`
+  letter-spacing: ${(props) => (props.letterSpacing ? props.letterSpacing : 0)};
+
+  font-size: ${(props) => {
+    switch (props.fontSize) {
+      case 'title1':
+        return '42px';
+      case 'title2':
+        return '34px';
+      case 'title3':
+        return '28px';
+      case 'title4':
+        return '22px';
+      case 'title5':
+        return '18px';
+      case 'small':
+        return '12px';
+      case 'smallest':
+        return '10px';
+    }
+    return props.fontSize ? props.fontSize : '14px';
+  }};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: ${(props) => {
+      switch (props.fontSizeT) {
+        case 'title1':
+          return '34px';
+        case 'title2':
+          return '28px';
+        case 'title3':
+          return '22px';
+        case 'title4':
+          return '18px';
+        case 'title5':
+          return '16px';
+        case 'small':
+          return '12px';
+        case 'smallest':
+          return '10px';
+      }
+      return props.fontSize ? props.fontSizeT : '14px';
+    }};
+  }
+
+  line-height: ${(props) => {
+    switch (props.lineHeight) {
+      case 'title1':
+        return '56px';
+      case 'title2':
+        return '48px';
+      case 'title3':
+        return '40px';
+      case 'title4':
+        return '32px';
+      case 'title5':
+        return '24px';
+      case 'small':
+        return '16px';
+      case 'smallest':
+        return '16px';
+    }
+    return props.lineHeight ? props.lineHeight : '24px';
+  }};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    line-height: ${(props) => {
+      switch (props.lineHeightT) {
+        case 'title1':
+          return '48px';
+        case 'title2':
+          return '40px';
+        case 'title3':
+          return '32px';
+        case 'title4':
+          return '24px';
+        case 'title5':
+          return '24px';
+        case 'small':
+          return '16px';
+        case 'smallest':
+          return '16px';
+      }
+      return props.fontSize ? props.lineHeightT : '24px';
+    }};
+  }
+
   /* DIRECTION */
-  direction: ${(props) => (props.theme.language === 'fa' ? 'rtl' : 'ltr')};
+  direction: ${(props) =>
+    props.direction
+      ? props.direction
+      : props.theme.language === 'fa'
+      ? 'rtl'
+      : 'ltr'};
+
+  margin: 0;
+
+  /* TEXT ALIGN */
+  text-align: ${(props) => (props.align ? props.align : '')};
 
   /* COLOR */
   color: ${(props) =>
-    !!props.theme.colors[props.color]
+    !!props.color && !!props.theme.colors[props.color]
       ? props.theme.colors[props.color]
-      : props.theme.colors.white};
+      : props.theme.colors.black1};
 
   /* FONT_FAMILY */
   font-family: ${(props) => {
@@ -18,15 +114,13 @@ export const Flex = styled.div`
     return 'Poppins';
   }};
 
+  /* WEIGHT */
+  font-weight: ${(props) => (props.weight ? props.weight : '')};
+
   /* WIDTH */
   width: ${(props) => (props.width ? props.width : '')};
   min-width: ${(props) => (props.minWidth ? props.minWidth : '')};
   max-width: ${(props) => (props.maxWidth ? props.maxWidth : '')};
-
-  /* OVERFLOW */
-  overflow: ${(props) => (props.overflow ? props.overflow : '')};
-  overflow-x: ${(props) => (props.overflowx ? props.overflowx : '')};
-  overflow-y: ${(props) => (props.overflowy ? props.overflowy : '')};
 
   /* HEIGHT */
   height: ${(props) => (props.height ? props.height : '')};
@@ -44,27 +138,21 @@ export const Flex = styled.div`
   /* PADDING */
   padding: ${(props) => (props.padding ? props.padding : '')};
   padding-top: ${(props) => (props.paddingTop ? props.paddingTop : '')};
-  padding-inline-start: ${(props) =>
+  padding-inline-end: ${(props) =>
     props.paddingRight ? props.paddingRight : ''};
   padding-bottom: ${(props) =>
     props.paddingBottom ? props.paddingBottom : ''};
-  padding-inline-end: ${(props) =>
+  padding-inline-start: ${(props) =>
     props.paddingLeft ? props.paddingLeft : ''};
 
   /* DISPLAY */
-  display: ${(props) => (props.display ? props.display : '')};
+  display: ${(props) => (props.display ? props.display : 'inline-block')};
 
   /* BACKGROUND */
   background: ${(props) =>
     props.background
       ? props.theme.colors[props.background] || props.background
       : ''};
-
-  /* BORDERRADIUS */
-  border-radius: ${(props) => props.borderRadius || ''};
-
-  /* TEXT ALIGN */
-  text-align: ${(props) => (props.align ? props.align : '')};
 
   /* BORDER */
   border: ${(props) => (props.border ? props.border : '')};
@@ -74,7 +162,8 @@ export const Flex = styled.div`
   border-right: ${(props) => (props.borderRight ? props.borderRight : '')};
   border-radius: ${(props) => (props.borderRadius ? props.borderRadius : '')};
   border-color: ${(props) =>
-    props.theme.colors[props.borderColor] || props.borderColor};
+    (props.borderColor && props.theme.colors[props.borderColor]) ||
+    props.borderColor};
 
   /* POSITION */
   position: ${(props) => (props.position ? props.position : '')};
@@ -83,27 +172,18 @@ export const Flex = styled.div`
   bottom: ${(props) => (props.bottom ? props.bottom : '')};
   top: ${(props) => (props.top ? props.top : '')};
 
-  /* FLEX */
-  -ms-flex: ${(props) => props.flexOrder || ''};
-  flex: ${(props) => props.flexOrder || ''};
-  flex-wrap: ${(props) => (props.flexWrap ? props.flexWrap : '')};
-  justify-content: ${(props) =>
-    props.justifyContent ? props.justifyContent : 'center'};
-  align-items: ${(props) => (props.alignItems ? props.alignItems : 'center')};
-  flex-direction: ${(props) =>
-    props.flexDirection ? props.flexDirection : ''};
-  gap: ${(props) => (props.flexGap ? props.flexGap : '')};
+  white-space: ${(props) => (props.whiteSpace ? props.whiteSpace : '')};
+  overflow: ${(props) => (props.overflow ? props.overflow : '')};
+  text-overflow: ${(props) => (props.textOverflow ? props.textOverflow : '')};
 
   @media ${({ theme }) => theme.device.desktop} {
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignD ? props.alignD : '')};
+
     /* WIDTH */
     width: ${(props) => (props.widthD ? props.widthD : '')};
     min-width: ${(props) => (props.minWidthD ? props.minWidthD : '')};
     max-width: ${(props) => (props.maxWidthD ? props.maxWidthD : '')};
-
-    /* OVERFLOW */
-    overflow: ${(props) => (props.overflowD ? props.overflowD : '')};
-    overflow-x: ${(props) => (props.overflowxD ? props.overflowxD : '')};
-    overflow-y: ${(props) => (props.overflowyD ? props.overflowyD : '')};
 
     /* HEIGHT */
     height: ${(props) => (props.heightD ? props.heightD : '')};
@@ -123,27 +203,21 @@ export const Flex = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingD ? props.paddingD : '')};
     padding-top: ${(props) => (props.paddingTopD ? props.paddingTopD : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightD ? props.paddingRightD : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomD ? props.paddingBottomD : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftD ? props.paddingLeftD : ''};
 
     /* DISPLAY */
-    display: ${(props) => (props.displayD ? props.displayD : '')};
+    display: ${(props) => (props.displayD ? props.displayD : 'inline-block')};
 
     /* BACKGROUND */
     background: ${(props) =>
       props.backgroundD
         ? props.theme.colors[props.backgroundD] || props.backgroundD
         : ''};
-
-    /* BORDERRADIUS */
-    border-radius: ${(props) => props.borderRadiusD || ''};
-
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignD ? props.alignD : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderD ? props.borderD : '')};
@@ -155,7 +229,8 @@ export const Flex = styled.div`
     border-radius: ${(props) =>
       props.borderRadiusD ? props.borderRadiusD : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorD] || props.borderColorD};
+      (props.borderColorD && props.theme.colors[props.borderColorD]) ||
+      props.borderColorD};
 
     /* POSITION */
     position: ${(props) => (props.positionD ? props.positionD : '')};
@@ -163,29 +238,16 @@ export const Flex = styled.div`
     left: ${(props) => (props.leftD ? props.leftD : '')};
     bottom: ${(props) => (props.bottomD ? props.bottomD : '')};
     top: ${(props) => (props.topD ? props.topD : '')};
-
-    /* FLEX */
-    -ms-flex: ${(props) => props.flexOrderD || ''};
-    flex: ${(props) => props.flexOrderD || ''};
-    flex-wrap: ${(props) => (props.flexWrapD ? props.flexWrapD : '')};
-    justify-content: ${(props) =>
-      props.justifyContentD ? props.justifyContentD : ''};
-    align-items: ${(props) => (props.alignItemsD ? props.alignItemsD : '')};
-    flex-direction: ${(props) =>
-      props.flexDirectionD ? props.flexDirectionD : ''};
-    gap: ${(props) => (props.flexGapD ? props.flexGapD : '')};
   }
 
   @media ${({ theme }) => theme.device.laptop} {
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignL ? props.alignL : '')};
+
     /* WIDTH */
     width: ${(props) => (props.widthL ? props.widthL : '')};
     min-width: ${(props) => (props.minWidthL ? props.minWidthL : '')};
     max-width: ${(props) => (props.maxWidthL ? props.maxWidthL : '')};
-
-    /* OVERFLOW */
-    overflow: ${(props) => (props.overflowL ? props.overflowL : '')};
-    overflow-x: ${(props) => (props.overflowxL ? props.overflowxL : '')};
-    overflow-y: ${(props) => (props.overflowyL ? props.overflowyL : '')};
 
     /* HEIGHT */
     height: ${(props) => (props.heightL ? props.heightL : '')};
@@ -205,27 +267,21 @@ export const Flex = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingL ? props.paddingL : '')};
     padding-top: ${(props) => (props.paddingTopL ? props.paddingTopL : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightL ? props.paddingRightL : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomL ? props.paddingBottomL : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftL ? props.paddingLeftL : ''};
 
     /* DISPLAY */
-    display: ${(props) => (props.displayL ? props.displayL : '')};
+    display: ${(props) => (props.displayL ? props.displayL : 'inline-block')};
 
     /* BACKGROUND */
     background: ${(props) =>
       props.backgroundL
         ? props.theme.colors[props.backgroundL] || props.backgroundL
         : ''};
-
-    /* BORDERRADIUS */
-    border-radius: ${(props) => props.borderRadiusL || ''};
-
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignL ? props.alignL : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderL ? props.borderL : '')};
@@ -237,7 +293,8 @@ export const Flex = styled.div`
     border-radius: ${(props) =>
       props.borderRadiusL ? props.borderRadiusL : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorL] || props.borderColorL};
+      (props.borderColorL && props.theme.colors[props.borderColorL]) ||
+      props.borderColorL};
 
     /* POSITION */
     position: ${(props) => (props.positionL ? props.positionL : '')};
@@ -245,29 +302,16 @@ export const Flex = styled.div`
     left: ${(props) => (props.leftL ? props.leftL : '')};
     bottom: ${(props) => (props.bottomL ? props.bottomL : '')};
     top: ${(props) => (props.topL ? props.topL : '')};
-
-    /* FLEX */
-    -ms-flex: ${(props) => props.flexOrderL || ''};
-    flex: ${(props) => props.flexOrderL || ''};
-    flex-wrap: ${(props) => (props.flexWrapL ? props.flexWrapL : '')};
-    justify-content: ${(props) =>
-      props.justifyContentL ? props.justifyContentL : ''};
-    align-items: ${(props) => (props.alignItemsL ? props.alignItemsL : '')};
-    flex-direction: ${(props) =>
-      props.flexDirectionL ? props.flexDirectionL : ''};
-    gap: ${(props) => (props.flexGapL ? props.flexGapL : '')};
   }
 
   @media ${({ theme }) => theme.device.tablet} {
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignT ? props.alignT : '')};
+
     /* WIDTH */
     width: ${(props) => (props.widthT ? props.widthT : '')};
     min-width: ${(props) => (props.minWidthT ? props.minWidthT : '')};
     max-width: ${(props) => (props.maxWidthT ? props.maxWidthT : '')};
-
-    /* OVERFLOW */
-    overflow: ${(props) => (props.overflowT ? props.overflowT : '')};
-    overflow-x: ${(props) => (props.overflowxT ? props.overflowxT : '')};
-    overflow-y: ${(props) => (props.overflowyT ? props.overflowyT : '')};
 
     /* HEIGHT */
     height: ${(props) => (props.heightT ? props.heightT : '')};
@@ -287,27 +331,21 @@ export const Flex = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingT ? props.paddingT : '')};
     padding-top: ${(props) => (props.paddingTopT ? props.paddingTopT : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightT ? props.paddingRightT : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomT ? props.paddingBottomT : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftT ? props.paddingLeftT : ''};
 
     /* DISPLAY */
-    display: ${(props) => (props.displayT ? props.displayT : '')};
+    display: ${(props) => (props.displayT ? props.displayT : 'inline-block')};
 
     /* BACKGROUND */
     background: ${(props) =>
       props.backgroundT
         ? props.theme.colors[props.backgroundT] || props.backgroundT
         : ''};
-
-    /* BORDERRADIUS */
-    border-radius: ${(props) => props.borderRadiusT || ''};
-
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignT ? props.alignT : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderT ? props.borderT : '')};
@@ -319,7 +357,8 @@ export const Flex = styled.div`
     border-radius: ${(props) =>
       props.borderRadiusT ? props.borderRadiusT : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorT] || props.borderColorT};
+      (props.borderColorT && props.theme.colors[props.borderColorT]) ||
+      props.borderColorT};
 
     /* POSITION */
     position: ${(props) => (props.positionT ? props.positionT : '')};
@@ -327,29 +366,16 @@ export const Flex = styled.div`
     left: ${(props) => (props.leftT ? props.leftT : '')};
     bottom: ${(props) => (props.bottomT ? props.bottomT : '')};
     top: ${(props) => (props.topT ? props.topT : '')};
-
-    /* FLEX */
-    -ms-flex: ${(props) => props.flexOrderT || ''};
-    flex: ${(props) => props.flexOrderT || ''};
-    flex-wrap: ${(props) => (props.flexWrapT ? props.flexWrapT : '')};
-    justify-content: ${(props) =>
-      props.justifyContentT ? props.justifyContentT : ''};
-    align-items: ${(props) => (props.alignItemsT ? props.alignItemsT : '')};
-    flex-direction: ${(props) =>
-      props.flexDirectionT ? props.flexDirectionT : ''};
-    gap: ${(props) => (props.flexGapT ? props.flexGapT : '')};
   }
 
   @media ${({ theme }) => theme.device.mobile} {
+    /* TEXT ALIGN */
+    text-align: ${(props) => (props.alignM ? props.alignM : '')};
+
     /* WIDTH */
     width: ${(props) => (props.widthM ? props.widthM : '')};
     min-width: ${(props) => (props.minWidthM ? props.minWidthM : '')};
     max-width: ${(props) => (props.maxWidthM ? props.maxWidthM : '')};
-
-    /* OVERFLOW */
-    overflow: ${(props) => (props.overflowM ? props.overflowM : '')};
-    overflow-x: ${(props) => (props.overflowxM ? props.overflowxM : '')};
-    overflow-y: ${(props) => (props.overflowyM ? props.overflowyM : '')};
 
     /* HEIGHT */
     height: ${(props) => (props.heightM ? props.heightM : '')};
@@ -369,27 +395,21 @@ export const Flex = styled.div`
     /* PADDING */
     padding: ${(props) => (props.paddingM ? props.paddingM : '')};
     padding-top: ${(props) => (props.paddingTopM ? props.paddingTopM : '')};
-    padding-inline-start: ${(props) =>
+    padding-inline-end: ${(props) =>
       props.paddingRightM ? props.paddingRightM : ''};
     padding-bottom: ${(props) =>
       props.paddingBottomM ? props.paddingBottomM : ''};
-    padding-inline-end: ${(props) =>
+    padding-inline-start: ${(props) =>
       props.paddingLeftM ? props.paddingLeftM : ''};
 
     /* DISPLAY */
-    display: ${(props) => (props.displayM ? props.displayM : '')};
+    display: ${(props) => (props.displayM ? props.displayM : 'inline-block')};
 
     /* BACKGROUND */
     background: ${(props) =>
       props.backgroundM
         ? props.theme.colors[props.backgroundM] || props.backgroundM
         : ''};
-
-    /* BORDERRADIUS */
-    border-radius: ${(props) => props.borderRadiusM || ''};
-
-    /* TEXT ALIGN */
-    text-align: ${(props) => (props.alignM ? props.alignM : '')};
 
     /* BORDER */
     border: ${(props) => (props.borderM ? props.borderM : '')};
@@ -401,7 +421,8 @@ export const Flex = styled.div`
     border-radius: ${(props) =>
       props.borderRadiusM ? props.borderRadiusM : ''};
     border-color: ${(props) =>
-      props.theme.colors[props.borderColorM] || props.borderColorM};
+      (props.borderColorM && props.theme.colors[props.borderColorM]) ||
+      props.borderColorM};
 
     /* POSITION */
     position: ${(props) => (props.positionM ? props.positionM : '')};
@@ -409,16 +430,5 @@ export const Flex = styled.div`
     left: ${(props) => (props.leftM ? props.leftM : '')};
     bottom: ${(props) => (props.bottomM ? props.bottomM : '')};
     top: ${(props) => (props.topM ? props.topM : '')};
-
-    /* FLEX */
-    -ms-flex: ${(props) => props.flexOrderM || ''};
-    flex: ${(props) => props.flexOrderM || ''};
-    flex-wrap: ${(props) => (props.flexWrapM ? props.flexWrapM : '')};
-    justify-content: ${(props) =>
-      props.justifyContentM ? props.justifyContentM : ''};
-    align-items: ${(props) => (props.alignItemsM ? props.alignItemsM : '')};
-    flex-direction: ${(props) =>
-      props.flexDirectionM ? props.flexDirectionM : ''};
-    gap: ${(props) => (props.flexGapM ? props.flexGapM : '')};
   }
 `;
