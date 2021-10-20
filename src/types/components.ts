@@ -233,7 +233,11 @@ type SharedNamedProps = Partial<{
   onMouseLeave: Function | SharedFunction;
 }>;
 
-type SharedProps = SharedSizeProps & SharedNamedProps;
+type SharedProps = SharedSizeProps &
+  SharedNamedProps &
+  Partial<{
+    fontFamily: TextFontFamily;
+  }>;
 
 /**
  * Box Props
@@ -459,7 +463,15 @@ type TextFontFamily =
   | 'Vazir'
   | 'Avenir-Regular'
   | 'Avenir-Black';
-type TextWeight = GlobalValues | '400' | '700' | '900' | 'normal' | 'bold';
+type TextWeight =
+  | GlobalValues
+  | '400'
+  | '600'
+  | '700'
+  | '800'
+  | '900'
+  | 'normal'
+  | 'bold';
 
 type TextNamedProps = Partial<{
   direction: TextDirection;
@@ -470,6 +482,9 @@ type TextNamedProps = Partial<{
   colorL: Color;
   colorT: Color;
   colorM: Color;
+  whiteSpace: string;
+  overflow: string;
+  textOverflow: string;
   ref: Ref<HTMLSpanElement>;
 }>;
 
@@ -493,7 +508,7 @@ type ButtonSizeProps = Partial<
 >;
 
 type ButtonNamedProps = Partial<{
-  type: 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger';
+  type: 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger' | 'alert';
   shape: 'fill' | 'outline' | 'borderless';
   size: 'xsmall' | 'small' | 'medium' | 'large';
   loading: boolean;
