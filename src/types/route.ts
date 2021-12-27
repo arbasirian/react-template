@@ -1,5 +1,3 @@
-import { Component } from 'react';
-
 export interface RouteModel {
   path: string;
   slug: string;

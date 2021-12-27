@@ -1,16 +1,8 @@
 import React, { Suspense, FC } from 'react';
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import ROUTES from 'routes';
 import { RouteModel } from 'types';
 import { MainLayout } from 'layouts';
-
-import GlobalStyle from 'assets/styles/global.styles';
 
 type Props = {
   route: RouteModel;

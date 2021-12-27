@@ -16,6 +16,9 @@ const App: FC = () => (
   <Suspense fallback={() => console.log(`111`, 111)}>
     <Router>
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
         {ROUTES.map((route) => (
           <RouteWithSubRoutes key={route.slug} {...route} />
         ))}
